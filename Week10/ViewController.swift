@@ -6,64 +6,87 @@
 //
 
 import UIKit
-import Alamofire
 import SnapKit
 import Kingfisher
 
-class ViewController: UIViewController {
+final class ViewController: UIViewController {
     
-    var id: String?
+    let viewModel = ViewModel()
     
-    let imageView = UIImageView()
-    let detailButton = UIButton(configuration: .filled())
+    private lazy var scrollView = {
+        let view = UIScrollView()
+        view.backgroundColor = .green
+        view.minimumZoomScale = 0.8
+        view.maximumZoomScale = 4
+        
+        view.showsVerticalScrollIndicator = false
+        view.showsHorizontalScrollIndicator = false
+        
+        view.delegate = self
+        return view
+    }()
     
+    let imageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFit
+        imageView.isUserInteractionEnabled = true
+        return imageView
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.addSubview(imageView)
-        view.addSubview(detailButton)
+        configureViews()
+        configureGesture()
         
-        imageView.contentMode = .scaleAspectFit
+        viewModel.getRandomPhoto { result in
+            switch result {
+            case .success(let success):
+                self.imageView.kf.setImage(with: URL(string: success.urls.thumb))
+            case .failure(let failure):
+                print(failure)
+            }
+        }
+    }
+    
+    private func configureViews() {
+        view.addSubview(scrollView)
+        scrollView.addSubview(imageView)
         
-        imageView.snp.makeConstraints { make in
+        scrollView.snp.makeConstraints { make in
             make.center.equalTo(view)
             make.height.width.equalTo(200)
         }
         
-        detailButton.setTitle("Detail", for: .normal)
-        
-        detailButton.snp.makeConstraints { make in
-            make.centerX.equalTo(imageView)
-            make.top.equalTo(imageView.snp.bottom).offset(50)
-            
-            make.width.equalTo(200)
-        }
-        
-        detailButton.addTarget(self, action: #selector(detailButtonDidTapped), for: .touchUpInside)
-    }
-    
-    func getRandomPhoto(completion: @escaping (Result<PhotoResult, NetworkError>) -> Void) {
-        NetworkBasic.shared.requestProcess(api: .random) { result in
-            completion(result)
+        imageView.snp.makeConstraints { make in
+            make.size.equalTo(scrollView)
         }
     }
     
-    func getPhotoDetail(id: String?, completion: @escaping (Result<Photo, NetworkError>) -> Void) {
-        guard let _id = id else { return }
-        NetworkBasic.shared.requestProcess(api: .detail(_id)) { result in
-            completion(result)
-        }
-    }
-    
-    func searchPhoto(query: String, completion: @escaping (Result<Photo, NetworkError>) -> Void) {
-        NetworkBasic.shared.requestProcess(api: .search(query)) { result in
-            completion(result)
-        }
+    private func configureGesture() {
+        let tapG = UITapGestureRecognizer(target: self, action: #selector(doubleTapGesture))
+        tapG.numberOfTapsRequired = 2
+        imageView.addGestureRecognizer(tapG)
     }
     
     @objc func detailButtonDidTapped() {
         
     }
+    
+    @objc func doubleTapGesture() {
+        if scrollView.zoomScale == 2.0 {
+            scrollView.setZoomScale(1, animated: true)
+        } else {
+            scrollView.setZoomScale(2.0, animated: true)
+        }
+    }
 }
 
+extension ViewController: UIScrollViewDelegate {
+    func scrollViewDidZoom(_ scrollView: UIScrollView) {
+    }
+    
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+        return imageView
+    }
+}

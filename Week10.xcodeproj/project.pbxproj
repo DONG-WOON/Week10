@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		72A975F42AB93D190021291C /* NetworkBasic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72A975F32AB93D190021291C /* NetworkBasic.swift */; };
 		72A975F62AB964BC0021291C /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72A975F52AB964BC0021291C /* API.swift */; };
+		72A975FC2ABA76370021291C /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72A975FB2ABA76370021291C /* Router.swift */; };
+		72A975FE2ABA9AD60021291C /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72A975FD2ABA9AD60021291C /* ViewModel.swift */; };
+		72A976002ABA9F600021291C /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72A975FF2ABA9F600021291C /* Observable.swift */; };
 		72C167142AB9296100C889C4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72C167132AB9296100C889C4 /* AppDelegate.swift */; };
 		72C167162AB9296100C889C4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72C167152AB9296100C889C4 /* SceneDelegate.swift */; };
 		72C167182AB9296100C889C4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72C167172AB9296100C889C4 /* ViewController.swift */; };
@@ -24,6 +27,9 @@
 /* Begin PBXFileReference section */
 		72A975F32AB93D190021291C /* NetworkBasic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkBasic.swift; sourceTree = "<group>"; };
 		72A975F52AB964BC0021291C /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
+		72A975FB2ABA76370021291C /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
+		72A975FD2ABA9AD60021291C /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
+		72A975FF2ABA9F600021291C /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		72C167102AB9296100C889C4 /* Week10.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Week10.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		72C167132AB9296100C889C4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		72C167152AB9296100C889C4 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -54,6 +60,7 @@
 			children = (
 				72A975F32AB93D190021291C /* NetworkBasic.swift */,
 				72A975F52AB964BC0021291C /* API.swift */,
+				72A975FB2ABA76370021291C /* Router.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -80,8 +87,10 @@
 				72C167132AB9296100C889C4 /* AppDelegate.swift */,
 				72C167152AB9296100C889C4 /* SceneDelegate.swift */,
 				72C167302AB92D5B00C889C4 /* Photo.swift */,
+				72A975FF2ABA9F600021291C /* Observable.swift */,
 				72A975F22AB93D050021291C /* Network */,
 				72C167172AB9296100C889C4 /* ViewController.swift */,
+				72A975FD2ABA9AD60021291C /* ViewModel.swift */,
 				72C167192AB9296100C889C4 /* Main.storyboard */,
 				72C1671C2AB9296400C889C4 /* Assets.xcassets */,
 				72C1671E2AB9296400C889C4 /* LaunchScreen.storyboard */,
@@ -174,8 +183,11 @@
 				72C167312AB92D5B00C889C4 /* Photo.swift in Sources */,
 				72C167182AB9296100C889C4 /* ViewController.swift in Sources */,
 				72C167142AB9296100C889C4 /* AppDelegate.swift in Sources */,
+				72A975FC2ABA76370021291C /* Router.swift in Sources */,
+				72A976002ABA9F600021291C /* Observable.swift in Sources */,
 				72C167162AB9296100C889C4 /* SceneDelegate.swift in Sources */,
 				72A975F62AB964BC0021291C /* API.swift in Sources */,
+				72A975FE2ABA9AD60021291C /* ViewModel.swift in Sources */,
 				72A975F42AB93D190021291C /* NetworkBasic.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

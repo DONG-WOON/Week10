@@ -41,7 +41,7 @@ final class NetworkBasic: Network {
 
     private init() { }
     
-    func requestProcess<U: Codable>(api: API, completion: @escaping (Result<U, NetworkError>) -> Void) {
+    final func requestProcess<U: Codable>(api: API, completion: @escaping (Result<U, NetworkError>) -> Void) {
         AF.request(api, method: api.method, parameters: api.parameter, encoding: api.encoding, headers: api.headers).validate().responseDecodable(of: U.self) { response in
             switch response.result {
             case .success(let data):
@@ -51,6 +51,12 @@ final class NetworkBasic: Network {
                 guard let _error = NetworkError(rawValue: statusCode) else { return }
                 completion(.failure(_error))
             }
+        }
+    }
+    
+    final func requestConvertible<T: Codable>(router: Router, completion: @escaping (Result<T, AFError>) -> Void) {
+        AF.request(router).validate().responseDecodable(of: T.self) { response in
+            completion(response.result)
         }
     }
 }
