@@ -8,7 +8,7 @@
 import Foundation
 import Alamofire
 
-enum NetworkError: Int, Error {
+enum sesacError: Int, Error {
     case unauthorized = 401
     case notFound = 404
     case invalidServer = 500
@@ -38,25 +38,32 @@ final class NetworkBasic: Network {
     typealias Shared = NetworkBasic
     
     static var shared: Shared = NetworkBasic()
-
+    
     private init() { }
     
-    final func requestProcess<U: Codable>(api: API, completion: @escaping (Result<U, NetworkError>) -> Void) {
+    final func requestProcess<U: Codable>(api: API, completion: @escaping (Result<U, sesacError>) -> Void) {
         AF.request(api, method: api.method, parameters: api.parameter, encoding: api.encoding, headers: api.headers).validate().responseDecodable(of: U.self) { response in
             switch response.result {
             case .success(let data):
                 completion(.success(data))
             case .failure:
                 guard let statusCode = response.response?.statusCode else { return }
-                guard let _error = NetworkError(rawValue: statusCode) else { return }
+                guard let _error = sesacError(rawValue: statusCode) else { return }
                 completion(.failure(_error))
             }
         }
     }
     
-    final func requestConvertible<T: Codable>(router: Router, completion: @escaping (Result<T, AFError>) -> Void) {
+    final func requestConvertible<T: Codable>(type: T.Type, router: Router, completion: @escaping (Result<T, sesacError>) -> Void) {
         AF.request(router).validate().responseDecodable(of: T.self) { response in
-            completion(response.result)
+            switch response.result {
+            case .success(let data):
+                completion(.success(data))
+            case .failure:
+                guard let statusCode = response.response?.statusCode else { return }
+                guard let _error = sesacError(rawValue: statusCode) else { return }
+                completion(.failure(_error))
+            }
         }
     }
 }

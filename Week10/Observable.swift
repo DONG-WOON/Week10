@@ -9,7 +9,7 @@ import Foundation
 
 class Observable<Value> {
     
-    private var value: Value {
+    var value: Value {
         didSet {
             listener?(value)
         }

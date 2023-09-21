@@ -39,14 +39,17 @@ final class ViewController: UIViewController {
         configureViews()
         configureGesture()
         
-        viewModel.getRandomPhoto { result in
-            switch result {
-            case .success(let success):
-                self.imageView.kf.setImage(with: URL(string: success.urls.thumb))
-            case .failure(let failure):
-                print(failure)
+        viewModel.photoResultURL
+            .bind { url in
+                self.imageView.kf.setImage(with: url)
             }
-        }
+        
+        viewModel.error
+            .bind { error in
+                print(error)
+            }
+        
+        viewModel.getRandomPhoto()
     }
     
     private func configureViews() {
