@@ -52,7 +52,6 @@ class SearchViewController: UIViewController, UICollectionViewDelegate {
         }
         
         dataSource = UICollectionViewDiffableDataSource(collectionView: collectionView, cellProvider: { collectionView, indexPath, item in
-            
             let cell = collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: item)
            
             return cell
@@ -61,15 +60,25 @@ class SearchViewController: UIViewController, UICollectionViewDelegate {
         collectionView.delegate = self
     }
     
-    func createLayout() -> UICollectionViewFlowLayout {
-        let flowLayout = UICollectionViewFlowLayout()
-        flowLayout.itemSize = .init(width: 50, height: 50)
-        return flowLayout
+    func createLayout() -> UICollectionViewCompositionalLayout {
+        
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1 / 3),
+                                              heightDimension: .fractionalHeight(1.0))
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                               heightDimension: .absolute(80))
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize,
+                                                       repeatingSubitem: item,
+                                                       count: 3)
+        let section = NSCollectionLayoutSection(group: group)
+        section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
+        let layout = UICollectionViewCompositionalLayout(section: section)
+        return layout
     }
 }
 
 extension SearchViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        print(scrollView.contentOffset.y)
     }
 }
